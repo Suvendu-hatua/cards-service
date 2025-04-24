@@ -1,5 +1,9 @@
 #spring.application.name=Cards
 
+#Application Port
+server:
+  port: 8090
+
 spring:
   application:
     name: Cards-MicroService
@@ -15,3 +19,4 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
