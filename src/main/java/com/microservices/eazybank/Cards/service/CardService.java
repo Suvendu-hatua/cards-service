@@ -1,7 +1,13 @@
 package com.microservices.eazybank.Cards.service;
 
-import org.springframework.stereotype.Service;
+import com.microservices.eazybank.Cards.dto.CardsDto;
 
-@Service
 public interface CardService {
+    void createCard(String mobileNumber);
+
+    CardsDto fetchCardDetails(String mobileNumber);
+
+    boolean updateCardDetails(CardsDto cardsDto);
+
+    boolean deleteCardDetails(String mobileNumber);
 }
