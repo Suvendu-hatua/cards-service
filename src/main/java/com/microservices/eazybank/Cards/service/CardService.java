@@ -7,7 +7,7 @@ public interface CardService {
 
     CardsDto fetchCardDetails(String mobileNumber);
 
-    boolean updateCardDetails(CardsDto cardsDto);
+    boolean updateCardDetails(CardsDto cardsDto) throws Exception;
 
     boolean deleteCardDetails(String mobileNumber);
 }

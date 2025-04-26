@@ -55,9 +55,18 @@ public class CardServiceImpl implements CardService {
      */
     @Override
     @Transactional
-    public boolean updateCardDetails(CardsDto cardsDto) {
+    public boolean updateCardDetails(CardsDto cardsDto) throws Exception {
         Cards cards = cardsRepository.findByMobileNumber(cardsDto.getMobileNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("Card", "mobileNumber", cardsDto.getMobileNumber()));
+        //validating Card Number ----- (Once it generated, can't be changed!)
+        if(!cards.getCardNumber().equals(cardsDto.getCardNumber())) {
+            throw new Exception("An exception occurred!\nCard number does not match");
+        }
+        //Updating amount
+        if(cards.getAmountUsed() != cardsDto.getAmountUsed()) {
+                int availableAmount = cardsDto.getTotalLimit() - cardsDto.getAmountUsed();
+                cardsDto.setAvailableAmount(availableAmount);
+        }
         cards=CardsMapper.mapToCards(cardsDto, cards);
         cardsRepository.save(cards);
         return true;
