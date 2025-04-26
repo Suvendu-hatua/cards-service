@@ -11,10 +11,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
         name = "CRUD REST APIs for Cards for Banking MicroService",
         description = "CRUD REST APIs for Banking MicroServices to CREATE, UPDATE, FETCH AND DELETE card details"
 )
+@Validated
 public class CardsController {
     private CardService cardService;
 
@@ -57,7 +61,8 @@ public class CardsController {
             }
     )
     @PostMapping("/create")
-    public ResponseEntity<ResponseDto> createCard(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> createCard(@Valid
+                                                      @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile Number must be 10 digits") String mobileNumber) {
         cardService.createCard(mobileNumber);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(CardsConstants.STATUS_201,CardsConstants.MESSAGE_201));
     }
@@ -87,7 +92,8 @@ public class CardsController {
             }
     )
     @GetMapping("/fetch")
-    public  ResponseEntity<CardsDto> fetchCardDetails(@RequestParam String mobileNumber) {
+    public  ResponseEntity<CardsDto> fetchCardDetails(@Valid
+                                                          @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile Number must be 10 digits") String mobileNumber) {
         CardsDto cardsDto = cardService.fetchCardDetails(mobileNumber);
         log.info("Fetched card details: {}", cardsDto);
         return ResponseEntity.status(HttpStatus.OK).body(cardsDto);
@@ -103,7 +109,7 @@ public class CardsController {
                     description = "HTTP Status OK",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = CardsDto.class)
+                            schema = @Schema(implementation = ResponseDto.class)
                     )
             ),
             @ApiResponse(
@@ -124,13 +130,14 @@ public class CardsController {
             )
     })
     @PutMapping("/update")
-    public ResponseEntity<ResponseDto> updateCardDeatils( CardsDto cardsDto) {
+    public ResponseEntity<ResponseDto> updateCardDetails(@Valid @RequestBody CardsDto cardsDto) throws Exception {
         boolean isUpdated = cardService.updateCardDetails(cardsDto);
         if(isUpdated) {
             log.info("Card details Updated successfully");
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(CardsConstants.STATUS_200,CardsConstants.MESSAGE_200));
         }
         else{
+            log.error("An exception occurred! \n Card details Not Updated");
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(CardsConstants.STATUS_417,CardsConstants.MESSAGE_417_UPDATE));
         }
@@ -167,13 +174,15 @@ public class CardsController {
             )
     })
     @DeleteMapping("/delete")
-    public ResponseEntity<ResponseDto> deleteCardDetails(@RequestParam String mobileNumber) {
+    public ResponseEntity<ResponseDto> deleteCardDetails(@Valid
+                                                             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})",message = "Mobile Number must be 10 digits") String mobileNumber) {
         boolean isDeleted = cardService.deleteCardDetails(mobileNumber);
         if(isDeleted) {
             log.info("Card deleted successfully");
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(CardsConstants.STATUS_200,CardsConstants.MESSAGE_200));
         }
         else{
+            log.error("Card details is not deleted! An exception occurred!! \n");
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(CardsConstants.STATUS_417,CardsConstants.MESSAGE_417_DELETE));
         }
     }
