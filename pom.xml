@@ -11,6 +11,7 @@
 	<groupId>com.microservices.eazybank</groupId>
 	<artifactId>Cards</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>Cards</name>
 	<description>Spring Boot Cards microservices</description>
 	<url/>
@@ -87,6 +88,16 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.4.5</version>
+				<configuration>
+					<to>
+						<image>docker.io/suvenduhatua01/cards:s1</image>
+					</to>
 				</configuration>
 			</plugin>
 			<plugin>
