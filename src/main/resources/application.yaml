@@ -26,6 +26,13 @@ spring:
     import: "optional:configserver:http://localhost:8071/"
   profiles:
     active:
-      - "prod"
+      - "default"
+
+# Enabling all the endpoints of Spring boot actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
