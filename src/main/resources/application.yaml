@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: Cards-MicroService
+    name: "cards"
     version: v1
     #    MySQL Databse Connection properties
   datasource:
@@ -23,21 +23,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
   config:
-    import:
-      - "application_prod.yml"
-      - "application_qa.yml"
+    import: "optional:configserver:http://localhost:8071/"
   profiles:
     active:
-      - "default"
-build:
-  version: "3.1"
+      - "prod"
 
-cards:
-  message: "Welcome to Cards service related local APIs "
-  contactDetails:
-    name: "Dragos Lech - Developer"
-    email: "dragos@eazybank.com"
-  onCallSupport:
-    - (412) 419-3491
-    - (915) 382-1932
 
