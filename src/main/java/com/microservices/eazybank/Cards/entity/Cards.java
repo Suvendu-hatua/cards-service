@@ -27,7 +27,7 @@ public class Cards extends BaseEntity {
   @Column(name = "available_amount")
   private int availableAmount;
 
-  @Column(name = "total_amount")
+  @Column(name = "total_limit")
   private int totalLimit;
 
   @Column(name = "amount_used")
