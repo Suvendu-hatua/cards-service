@@ -20,19 +20,19 @@ import java.time.LocalDateTime;
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-    @Column(updatable = false)
-    @CreatedDate
-    private LocalDateTime createdAt;
+  @Column(updatable = false)
+  @CreatedDate
+  private LocalDateTime createdAt;
 
-    @Column(updatable = false)
-    @CreatedBy
-    private String createdBy;
+  @Column(updatable = false)
+  @CreatedBy
+  private String createdBy;
 
-    @Column(insertable = false)
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
+  @Column(insertable = false)
+  @LastModifiedDate
+  private LocalDateTime updatedAt;
 
-    @Column(insertable = false)
-    @LastModifiedBy
-    private String updatedBy;
+  @Column(insertable = false)
+  @LastModifiedBy
+  private String updatedBy;
 }

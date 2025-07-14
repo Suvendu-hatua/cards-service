@@ -1,6 +1,5 @@
 package com.microservices.eazybank.Cards.dto;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -12,7 +11,7 @@ import java.util.Map;
 @Setter
 @Getter
 public class CardsContactInfoDto {
-    private String message;
-    private Map<String,String> contactDetails;
-    private List<String> onCallSupport;
+  private String message;
+  private Map<String, String> contactDetails;
+  private List<String> onCallSupport;
 }
