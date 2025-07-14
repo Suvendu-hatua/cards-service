@@ -11,17 +11,17 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @Schema(
-        name = "Response",
-        description = "Schema to hold Successful response information"
+    name = "Response",
+    description = "Schema to hold Successful response information"
 )
 public class ResponseDto {
-    @Schema(
-            description = "Status code in the response"
-    )
-    private String httpStatus;
+  @Schema(
+      description = "Status code in the response"
+  )
+  private String httpStatus;
 
-    @Schema(
-            description = "Status message in the response"
-    )
-    private String message;
+  @Schema(
+      description = "Status message in the response"
+  )
+  private String message;
 }

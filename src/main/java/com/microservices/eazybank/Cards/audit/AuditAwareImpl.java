@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component("AuditAwareImpl")
-public class AuditAwareImpl implements AuditorAware {
+@Component("auditAwareImpl")
+public class AuditAwareImpl implements AuditorAware<String> {
     /**
-     * @return
+     * @return Optional<String>
      */
     @Override
-    public Optional getCurrentAuditor() {
+    public Optional<String> getCurrentAuditor() {
         return Optional.of("Banking_MS");
     }
 }
